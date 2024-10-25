@@ -1,5 +1,8 @@
 install:
-	cp bin/gendiff.js /usr/local/bin/gendiff
-	chmod +x /usr/local/bin/gendiff
+	npm ci
 
-.PHONY:
+publish:
+	npm publish --dry-run
+
+gendiff:
+	bin/gendiff.js
