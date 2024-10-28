@@ -9,3 +9,6 @@ lint:
 
 gendiff:
 	bin/gendiff.js
+
+test:
+	npm test
