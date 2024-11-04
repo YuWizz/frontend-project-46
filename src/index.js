@@ -1,12 +1,5 @@
-const fs = require('fs');
-const path = require('path');
 const _ = require('lodash');
-
-const parseFile = (filePath) => {
-  const fullPath = path.resolve(process.cwd(), filePath);
-  const fileData = fs.readFileSync(fullPath, 'utf-8');
-  return JSON.parse(fileData);
-};
+const parseFile = require('./parsers');
   
 const genDiff = (filepath1, filepath2) => {
   const data1 = parseFile(filepath1);

@@ -8,3 +8,5 @@
 [![hexlet-check](https://github.com/YuWizz/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/YuWizz/frontend-project-46/actions/workflows/hexlet-check.yml)
 
 [demo](https://asciinema.org/a/VuteGaBhhIkXV8ChXvLLXRT6o)
+
+[demoyml](https://asciinema.org/a/8T2V43zGHk4sGPfVh8JL7gnd2)
