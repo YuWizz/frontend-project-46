@@ -1,27 +1,13 @@
-const _ = require('lodash');
 const parseFile = require('./parsers');
-  
-const genDiff = (filepath1, filepath2) => {
-  const data1 = parseFile(filepath1);
-  const data2 = parseFile(filepath2);
-  
-  const keys = _.union(Object.keys(data1), Object.keys(data2));
-  const sortedKeys = _.sortBy(keys);
-  
-  const result = sortedKeys.map((key) => {
-    if (!(key in data1)) {
-      return `  + ${key}: ${data2[key]}`;
-    }
-    if (!(key in data2)) {
-      return `  - ${key}: ${data1[key]}`;
-    }
-    if (data1[key] !== data2[key]) {
-      return `  - ${key}: ${data1[key]}\n  + ${key}: ${data2[key]}`;
-    }
-    return `    ${key}: ${data1[key]}`;
-  });
+const buildDiffTree = require('./utils');
+const formatDiff = require('./formatters/index-format');
 
-    return `{\n${result.join('\n')}\n}`;
+const genDiff = (filePath1, filePath2, format = 'stylish') => {
+  const data1 = parseFile(filePath1);
+  const data2 = parseFile(filePath2);
+  const diffTree = buildDiffTree(data1, data2);
+
+  return formatDiff(diffTree, format);
 };
-  
+
 module.exports = genDiff;
