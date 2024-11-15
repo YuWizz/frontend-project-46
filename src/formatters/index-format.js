@@ -1,5 +1,6 @@
 const stylish = require('./stylish');
 const plain = require('./plain');
+const json = require('./json');
 
 const formatDiff = (diff, format = 'stylish') => {
   switch (format) {
@@ -7,6 +8,8 @@ const formatDiff = (diff, format = 'stylish') => {
       return stylish(diff);
     case 'plain':
       return plain(diff);
+    case 'json':
+      return json(diff);
     default:
       throw new Error(`Unknown format: ${format}`);
   }

@@ -21,3 +21,15 @@ test('correctly compares two files in plain format', () => {
   const output = genDiff(filePath1, filePath2, 'plain');
   expect(output).toBe(expectedOutput);
 });
+
+test('correctly compares two files in JSON format', () => {
+  const filePath1 = path.join(__dirname, '..', '__fixtures__', 'file1.json');
+  const filePath2 = path.join(__dirname, '..', '__fixtures__', 'file2.json');
+  
+  const diff = genDiff(filePath1, filePath2, 'json');
+  const parsedDiff = JSON.parse(diff);
+
+  expect(parsedDiff).toBeInstanceOf(Object);
+  expect(parsedDiff).toHaveProperty('common');
+  expect(parsedDiff.common).toHaveProperty('children');
+});
