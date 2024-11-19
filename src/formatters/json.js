@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 const arrayToObject = (array) => _.keyBy(array, 'key');
 
@@ -7,4 +7,4 @@ const json = (diffTree) => {
   return JSON.stringify(result, null, 2);
 };
 
-module.exports = json;
+export default json;

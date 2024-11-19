@@ -1,6 +1,6 @@
-const stylish = require('./stylish');
-const plain = require('./plain');
-const json = require('./json');
+import stylish from './stylish';
+import plain from './plain';
+import json from './json';
 
 const formatDiff = (diff, format = 'stylish') => {
   switch (format) {
@@ -15,4 +15,4 @@ const formatDiff = (diff, format = 'stylish') => {
   }
 };
 
-module.exports = formatDiff;
+export default formatDiff;

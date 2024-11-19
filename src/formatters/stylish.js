@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
@@ -34,4 +34,4 @@ const formatStylish = (diffTree, depth = 1) => {
   return lines.join('\n');
 };
 
-module.exports = formatStylish;
+export default formatStylish;

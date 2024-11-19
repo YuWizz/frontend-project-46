@@ -1,6 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
+  "type": "module",
   "description": "[![Actions Status](https://github.com/YuWizz/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/YuWizz/frontend-project-46/actions)",
   "main": "bin/gendiff.js",
   "bin": {
@@ -8,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --bail"
   },
   "author": "",
   "license": "ISC",

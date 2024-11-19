@@ -29,5 +29,5 @@ const formatValue = (value) => {
     return iter(diffTree, []);
   };
   
-module.exports = plain;
+export default plain;
   

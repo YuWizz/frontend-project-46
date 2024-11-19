@@ -6,9 +6,10 @@ export default [
   {
     files: ["**/*.js"],
     languageOptions: {
-      sourceType: "commonjs",
+      sourceType: "module",
       globals: {
         ...globals.browser,
+        ...globals.node,
         process: "readonly",
       },
     },

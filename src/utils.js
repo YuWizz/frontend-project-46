@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 const buildDiffTree = (data1, data2) => {
   const keys = _.union(Object.keys(data1), Object.keys(data2)).sort();
@@ -22,4 +22,4 @@ const buildDiffTree = (data1, data2) => {
   });
 };
 
-module.exports = buildDiffTree;
+export default buildDiffTree;

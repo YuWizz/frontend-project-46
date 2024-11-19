@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
 
 const parseFile = (filepath) => {
   const fullPath = path.resolve(process.cwd(), filepath);
@@ -17,4 +17,4 @@ const parseFile = (filepath) => {
   throw new Error(`Unsupported file format: ${ext}`);
 };
 
-module.exports = parseFile;
+export default parseFile;

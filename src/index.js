@@ -1,6 +1,6 @@
-const parseFile = require('./parsers');
-const buildDiffTree = require('./utils');
-const formatDiff = require('./formatters/index-format');
+import parseFile from './parsers';
+import buildDiffTree from './utils';
+import formatDiff from './formatters/index';
 
 const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const data1 = parseFile(filePath1);
@@ -10,4 +10,4 @@ const genDiff = (filePath1, filePath2, format = 'stylish') => {
   return formatDiff(diffTree, format);
 };
 
-module.exports = genDiff;
+export default genDiff;
