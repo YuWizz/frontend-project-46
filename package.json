@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --bail"
+    "test": "npx jest --runInBand --bail"
   },
   "author": "",
   "license": "ISC",
