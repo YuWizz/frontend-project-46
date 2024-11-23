@@ -11,4 +11,4 @@ gendiff:
 	bin/gendiff.js
 
 test:
-	npx jest --color --runInBand --bail
+	npm test
