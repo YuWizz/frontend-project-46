@@ -11,4 +11,4 @@ gendiff:
 	bin/gendiff.js
 
 test:
-	npm test
+	npm run test

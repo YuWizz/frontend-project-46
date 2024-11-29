@@ -1,6 +1,6 @@
-import parseFile from './parsers';
-import buildDiffTree from './utils';
-import formatDiff from './formatters/index';
+import parseFile from './parsers.js';
+import buildDiffTree from './utils.js';
+import formatDiff from './formatters/index.js';
 
 const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const data1 = parseFile(filePath1);

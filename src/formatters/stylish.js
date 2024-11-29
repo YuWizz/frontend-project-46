@@ -1,16 +1,18 @@
 import _ from 'lodash';
 
-const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
+const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount);
 
 const stringify = (value, depth) => {
-  if (!_.isObject(value)) return String(value);
+  if (!_.isObject(value)) {
+    return String(value);
+  }
 
   const entries = Object.entries(value)
-    .map(([key, val]) => `${indent(depth + 1)}  ${key}: ${stringify(val, depth + 1)}`);
-  return `{\n${entries.join('\n')}\n${indent(depth)}  }`;
+    .map(([key, val]) => `${indent(depth + 1)}${key}: ${stringify(val, depth + 1)}`);
+  return `{\n${entries.join('\n')}\n${indent(depth)}}`;
 };
 
-const formatStylish = (diffTree, depth = 1) => {
+const stylish = (diffTree, depth = 1) => {
   const lines = diffTree.map((node) => {
     switch (node.type) {
       case 'added':
@@ -25,13 +27,13 @@ const formatStylish = (diffTree, depth = 1) => {
           `${indent(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
         ].join('\n');
       case 'nested':
-        return `${indent(depth)}  ${node.key}: {\n${formatStylish(node.children, depth + 1)}\n${indent(depth)}  }`;
+        return `${indent(depth)}  ${node.key}: ${stylish(node.children, depth + 1)}`;
       default:
         throw new Error(`Unknown node type: ${node.type}`);
     }
   });
 
-  return lines.join('\n');
+  return `{\n${lines.join('\n')}\n${indent(depth - 1)}}`;
 };
 
-export default formatStylish;
+export default stylish;
