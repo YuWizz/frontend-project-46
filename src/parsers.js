@@ -13,7 +13,7 @@ const parseFile = (filepath) => {
   if (ext === '.yml' || ext === '.yaml') {
     return yaml.load(data);
   }
-  
+
   throw new Error(`Unsupported file format: ${ext}`);
 };
 

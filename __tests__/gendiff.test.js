@@ -37,7 +37,7 @@ describe('genDiff tests', () => {
   test('Check uncorrect files', () => {
     const invalidFilePath = getFixturePath('invalid.json');
     expect(() => genDiff(invalidFilePath, filePath2)).toThrow(/Unexpected token/i);
-  });  
+  });
 
   test('Check unavailable file', () => {
     const nonExistentPath = getFixturePath('non_existent.json');

@@ -4,7 +4,7 @@ const formatValue = (value) => {
   }
   return typeof value === 'string' ? `'${value}'` : String(value);
 };
-  
+
 const plain = (diffTree) => {
   const iter = (nodes, path) => nodes
     .flatMap((node) => {
@@ -25,9 +25,8 @@ const plain = (diffTree) => {
       }
     })
     .join('\n');
-  
+
   return iter(diffTree, []);
 };
-  
+
 export default plain;
-  
