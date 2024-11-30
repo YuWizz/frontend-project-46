@@ -2,38 +2,41 @@ import _ from 'lodash';
 
 const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount);
 
-const stringify = (value, depth) => {
+const stringify = (value, depth, spacesCount = 4) => {
   if (!_.isObject(value)) {
     return String(value);
   }
 
   const entries = Object.entries(value)
-    .map(([key, val]) => `${indent(depth + 1)}${key}: ${stringify(val, depth + 1)}`);
-  return `{\n${entries.join('\n')}\n${indent(depth)}}`;
+    .map(([key, val]) => `${indent(depth + 1, spacesCount)}${key}: ${stringify(val, depth + 1, spacesCount)}`);
+  return `{\n${entries.join('\n')}\n${indent(depth, spacesCount)}}`;
 };
 
-const stylish = (diffTree, depth = 1) => {
+const stylish = (diffTree, depth = 1, spacesCount = 4) => {
+  const currentIndent = indent(depth, spacesCount).slice(2);
+  const bracketIndent = indent(depth - 1, spacesCount);
+
   const lines = diffTree.map((node) => {
     switch (node.type) {
       case 'added':
-        return `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
+        return `${currentIndent}+ ${node.key}: ${stringify(node.value, depth, spacesCount)}`;
       case 'removed':
-        return `${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
+        return `${currentIndent}- ${node.key}: ${stringify(node.value, depth, spacesCount)}`;
       case 'unchanged':
-        return `${indent(depth)}  ${node.key}: ${stringify(node.value, depth)}`;
+        return `${currentIndent}  ${node.key}: ${stringify(node.value, depth, spacesCount)}`;
       case 'updated':
         return [
-          `${indent(depth)}- ${node.key}: ${stringify(node.oldValue, depth)}`,
-          `${indent(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
+          `${currentIndent}- ${node.key}: ${stringify(node.oldValue, depth, spacesCount)}`,
+          `${currentIndent}+ ${node.key}: ${stringify(node.newValue, depth, spacesCount)}`,
         ].join('\n');
       case 'nested':
-        return `${indent(depth)}  ${node.key}: ${stylish(node.children, depth + 1)}`;
+        return `${currentIndent}  ${node.key}: ${stylish(node.children, depth + 1, spacesCount)}`;
       default:
         throw new Error(`Unknown node type: ${node.type}`);
     }
   });
 
-  return `{\n${lines.join('\n')}\n${indent(depth - 1)}}`;
+  return `{\n${lines.join('\n')}\n${bracketIndent}}`;
 };
 
 export default stylish;
