@@ -16,8 +16,6 @@ describe('genDiff tests', () => {
   test('Compare files stylish default', () => {
     const expectedOutput = readFixture('expected_stylish.txt');
     const output = genDiff(filePath1, filePath2, 'stylish');
-    console.log('Actual output:\n', output);
-    console.log('Expected output:\n', expectedOutput);
     expect(output).toEqual(expectedOutput);
   });
 

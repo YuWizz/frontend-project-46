@@ -1,7 +1,6 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 
-
 export default [
   {
     files: ["**/*.js"],
@@ -10,6 +9,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        ...globals.jest,
         process: "readonly",
       },
     },
