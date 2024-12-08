@@ -1,12 +1,4 @@
 import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
-
-const getFileData = (filePath) => {
-  const rawData = fs.readFileSync(filePath, 'utf-8');
-  const format = path.extname(filePath).slice(1);
-  return { rawData, format };
-};
 
 const buildDiffTree = (data1, data2) => {
   const keys = _.orderBy(_.union(Object.keys(data1), Object.keys(data2)));
@@ -23,11 +15,11 @@ const buildDiffTree = (data1, data2) => {
     }
     if (!_.isEqual(data1[key], data2[key])) {
       return {
-        key, type: 'updated', oldValue: data1[key], newValue: data2[key],
+        key, type: 'updated', value1: data1[key], value2: data2[key],
       };
     }
     return { key, type: 'unchanged', value: data1[key] };
   });
 };
 
-export { buildDiffTree, getFileData };
+export default buildDiffTree;

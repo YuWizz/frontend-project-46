@@ -26,8 +26,8 @@ const stylish = (diffTree, depth = 1, spacesCount = 4) => {
         return `${currentIndent}  ${node.key}: ${stringify(node.value, depth, spacesCount)}`;
       case 'updated':
         return [
-          `${currentIndent}- ${node.key}: ${stringify(node.oldValue, depth, spacesCount)}`,
-          `${currentIndent}+ ${node.key}: ${stringify(node.newValue, depth, spacesCount)}`,
+          `${currentIndent}- ${node.key}: ${stringify(node.value1, depth, spacesCount)}`,
+          `${currentIndent}+ ${node.key}: ${stringify(node.value2, depth, spacesCount)}`,
         ].join('\n');
       case 'nested':
         return `${currentIndent}  ${node.key}: ${stylish(node.children, depth + 1, spacesCount)}`;

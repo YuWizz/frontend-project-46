@@ -1,6 +1,14 @@
+import fs from 'fs';
+import path from 'path';
 import parse from './parsers.js';
-import { getFileData, buildDiffTree } from './utils.js';
+import buildDiffTree from './utils.js';
 import formatDiff from './formatters/index.js';
+
+const getFileData = (filePath) => {
+  const rawData = fs.readFileSync(filePath, 'utf-8');
+  const format = path.extname(filePath).slice(1);
+  return { rawData, format };
+};
 
 const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const { rawData: rawData1, format: format1 } = getFileData(filePath1);

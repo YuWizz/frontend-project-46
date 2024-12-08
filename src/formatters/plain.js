@@ -15,7 +15,7 @@ const plain = (diffTree) => {
         case 'removed':
           return `Property '${fullPath}' was removed`;
         case 'updated':
-          return `Property '${fullPath}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
+          return `Property '${fullPath}' was updated. From ${formatValue(node.value1)} to ${formatValue(node.value2)}`;
         case 'nested':
           return iter(node.children, [...path, node.key]);
         case 'unchanged':
