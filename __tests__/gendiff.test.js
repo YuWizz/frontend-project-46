@@ -13,15 +13,12 @@ describe('genDiff tests', () => {
   const filePath1 = getFixturePath('file1.json');
   const filePath2 = getFixturePath('file2.json');
 
-  test('Compare files stylish default', () => {
-    const expectedOutput = readFixture('expected_stylish.txt');
-    const output = genDiff(filePath1, filePath2, 'stylish');
-    expect(output).toEqual(expectedOutput);
-  });
-
-  test('Compare files plain', () => {
-    const expectedOutput = readFixture('expected_plain.txt');
-    const output = genDiff(filePath1, filePath2, 'plain');
+  test.each([
+    ['stylish', 'expected_stylish.txt'],
+    ['plain', 'expected_plain.txt'],
+  ])('Compare files stylish & plain', (format, expectedFile) => {
+    const expectedOutput = readFixture(expectedFile);
+    const output = genDiff(filePath1, filePath2, format);
     expect(output).toEqual(expectedOutput);
   });
 
@@ -29,9 +26,10 @@ describe('genDiff tests', () => {
     const diff = genDiff(filePath1, filePath2, 'json');
     const parsedDiff = JSON.parse(diff);
 
-    expect(parsedDiff).toBeInstanceOf(Object);
-    expect(parsedDiff).toHaveProperty('common');
-    expect(parsedDiff.common).toHaveProperty('children');
+    expect(parsedDiff).toBeInstanceOf(Array);
+    const commonNode = parsedDiff.find((node) => node.key === 'common');
+    expect(commonNode).toBeDefined();
+    expect(commonNode).toHaveProperty('children');
   });
 
   test('Check uncorrect files', () => {
@@ -44,26 +42,16 @@ describe('genDiff tests', () => {
     expect(() => genDiff(nonExistentPath, filePath2)).toThrow(/ENOENT/i);
   });
 
-  test('Stylish default', () => {
-    const expectedOutput = readFixture('expected_stylish.txt');
-    const output = genDiff(filePath1, filePath2);
-    expect(output).toEqual(expectedOutput);
-  });
+  test.each([
+    ['file1.json', 'file2.json', 'expected_stylish.txt'],
+    ['file1.yml', 'file2.yml', 'expected_stylish.txt'],
+    ['file1.json', 'file2.yml', 'expected_stylish.txt'],
+  ])('Compare YAML & JSON files', (file1, file2, expectedFile) => {
+    const filePath1 = getFixturePath(file1);
+    const filePath2 = getFixturePath(file2);
+    const expectedOutput = readFixture(expectedFile);
 
-  test('Compare YAML files', () => {
-    const filePathYaml1 = getFixturePath('file1.yml');
-    const filePathYaml2 = getFixturePath('file2.yml');
-    const expectedOutput = readFixture('expected_stylish.txt');
-
-    const output = genDiff(filePathYaml1, filePathYaml2, 'stylish');
-    expect(output).toEqual(expectedOutput);
-  });
-
-  test('Compare JSON & YAML files', () => {
-    const filePathYaml = getFixturePath('file2.yml');
-    const expectedOutput = readFixture('expected_stylish.txt');
-
-    const output = genDiff(filePath1, filePathYaml, 'stylish');
+    const output = genDiff(filePath1, filePath2, 'stylish');
     expect(output).toEqual(expectedOutput);
   });
 });

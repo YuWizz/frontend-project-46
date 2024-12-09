@@ -1,8 +1,3 @@
-import _ from 'lodash';
-
-const json = (diffTree) => {
-  const result = _.keyBy(diffTree, 'key');
-  return JSON.stringify(result, null, 2);
-};
+const json = (diffTree) => JSON.stringify(diffTree);
 
 export default json;
