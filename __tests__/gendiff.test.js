@@ -10,20 +10,20 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 describe('genDiff tests', () => {
-  const filePath1 = getFixturePath('file1.json');
-  const filePath2 = getFixturePath('file2.json');
+  const globalFilePath1 = getFixturePath('file1.json');
+  const globalFilePath2 = getFixturePath('file2.json');
 
   test.each([
     ['stylish', 'expected_stylish.txt'],
     ['plain', 'expected_plain.txt'],
   ])('Compare files stylish & plain', (format, expectedFile) => {
     const expectedOutput = readFixture(expectedFile);
-    const output = genDiff(filePath1, filePath2, format);
+    const output = genDiff(globalFilePath1, globalFilePath2, format);
     expect(output).toEqual(expectedOutput);
   });
 
   test('Compare files JSON', () => {
-    const diff = genDiff(filePath1, filePath2, 'json');
+    const diff = genDiff(globalFilePath1, globalFilePath2, 'json');
     const parsedDiff = JSON.parse(diff);
 
     expect(parsedDiff).toBeInstanceOf(Array);
@@ -34,12 +34,12 @@ describe('genDiff tests', () => {
 
   test('Check uncorrect files', () => {
     const invalidFilePath = getFixturePath('invalid.json');
-    expect(() => genDiff(invalidFilePath, filePath2)).toThrow(/Unexpected token/i);
+    expect(() => genDiff(invalidFilePath, globalFilePath2)).toThrow(/Unexpected token/i);
   });
 
   test('Check unavailable file', () => {
     const nonExistentPath = getFixturePath('non_existent.json');
-    expect(() => genDiff(nonExistentPath, filePath2)).toThrow(/ENOENT/i);
+    expect(() => genDiff(nonExistentPath, globalFilePath2)).toThrow(/ENOENT/i);
   });
 
   test.each([
