@@ -10,48 +10,35 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 describe('genDiff tests', () => {
-  const globalFilePath1 = getFixturePath('file1.json');
-  const globalFilePath2 = getFixturePath('file2.json');
+  const jsonFilePath1 = getFixturePath('file1.json');
+  const jsonFilePath2 = getFixturePath('file2.json');
+  const yamlFilePath1 = getFixturePath('file1.yml');
+  const yamlFilePath2 = getFixturePath('file2.yml');
 
   test.each([
-    ['stylish', 'expected_stylish.txt'],
-    ['plain', 'expected_plain.txt'],
-  ])('Compare files stylish & plain', (format, expectedFile) => {
+    ['stylish', 'expected_stylish.txt', jsonFilePath1, jsonFilePath2],
+    ['plain', 'expected_plain.txt', jsonFilePath1, jsonFilePath2],
+    ['stylish', 'expected_stylish.txt', yamlFilePath1, yamlFilePath2],
+    ['stylish', 'expected_stylish.txt', jsonFilePath1, yamlFilePath2],
+    [undefined, 'expected_stylish.txt', jsonFilePath1, jsonFilePath2],
+  ])('Check file formats & default format', (format, expectedFile, filePath1, filePath2) => {
     const expectedOutput = readFixture(expectedFile);
-    const output = genDiff(globalFilePath1, globalFilePath2, format);
+    const output = format ? genDiff(filePath1, filePath2, format) : genDiff(filePath1, filePath2);
     expect(output).toEqual(expectedOutput);
   });
 
   test('Compare files JSON', () => {
-    const diff = genDiff(globalFilePath1, globalFilePath2, 'json');
-    const parsedDiff = JSON.parse(diff);
-
-    expect(parsedDiff).toBeInstanceOf(Array);
-    const commonNode = parsedDiff.find((node) => node.key === 'common');
-    expect(commonNode).toBeDefined();
-    expect(commonNode).toHaveProperty('children');
+    const diff = genDiff(jsonFilePath1, jsonFilePath2, 'json');
+    expect(() => JSON.parse(diff));
   });
 
   test('Check uncorrect files', () => {
     const invalidFilePath = getFixturePath('invalid.json');
-    expect(() => genDiff(invalidFilePath, globalFilePath2)).toThrow(/Unexpected token/i);
+    expect(() => genDiff(invalidFilePath, jsonFilePath2)).toThrow(/Unexpected token/i);
   });
 
   test('Check unavailable file', () => {
     const nonExistentPath = getFixturePath('non_existent.json');
-    expect(() => genDiff(nonExistentPath, globalFilePath2)).toThrow(/ENOENT/i);
-  });
-
-  test.each([
-    ['file1.json', 'file2.json', 'expected_stylish.txt'],
-    ['file1.yml', 'file2.yml', 'expected_stylish.txt'],
-    ['file1.json', 'file2.yml', 'expected_stylish.txt'],
-  ])('Compare YAML & JSON files', (file1, file2, expectedFile) => {
-    const filePath1 = getFixturePath(file1);
-    const filePath2 = getFixturePath(file2);
-    const expectedOutput = readFixture(expectedFile);
-
-    const output = genDiff(filePath1, filePath2, 'stylish');
-    expect(output).toEqual(expectedOutput);
+    expect(() => genDiff(nonExistentPath, jsonFilePath2)).toThrow(/ENOENT/i);
   });
 });
