@@ -29,7 +29,7 @@ describe('genDiff tests', () => {
 
   test('Compare files JSON', () => {
     const diff = genDiff(jsonFilePath1, jsonFilePath2, 'json');
-    expect(() => JSON.parse(diff));
+    expect(() => JSON.parse(diff)).not.toThrow();
   });
 
   test('Check uncorrect files', () => {
