@@ -5,10 +5,10 @@
 
 [![hexlet-check](https://github.com/YuWizz/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/YuWizz/frontend-project-46/actions/workflows/hexlet-check.yml)
 
+[![Test Coverage](https://api.codeclimate.com/v1/badges/02caa56d1dadf775f8ea/test_coverage)](https://codeclimate.com/github/YuWizz/frontend-project-46/test_coverage)
+
 
 # genDiff
-
-[![Test Coverage](https://api.codeclimate.com/v1/badges/02caa56d1dadf775f8ea/test_coverage)](https://codeclimate.com/github/YuWizz/frontend-project-46/test_coverage)
 
 `genDiff` — a tool for comparing two files. It finds differences between data structures.
 
